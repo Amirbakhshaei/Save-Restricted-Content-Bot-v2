@@ -57,7 +57,7 @@ telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot
 
 # MongoDB setup
 tclient = None
-tdb = tclient["telegram_bot"]  # Your database
+tdb = None  # Your database
 token = tdb["tokens"]  # Your tokens collection
 
 async def create_ttl_index():
