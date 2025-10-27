@@ -61,8 +61,13 @@ tdb = None  # Your database
 token = None  # Your tokens collection
 
 async def create_ttl_index():
-    """Ensure the TTL index exists for the `tokens` collection."""
-    await token.create_index("expires_at", expireAfterSeconds=0)
+    global token # Make sure 'token' is accessible here
+    
+    if token is not None:  # <--- ADD THIS CHECK
+        await token.create_index("expires_at", expireAfterSeconds=0) # Line 65
+    else:
+        # Optionally log that the database is disabled
+        print("Database not available. Skipping index creation.")
 
 # Run the TTL index creation when the bot starts
 async def setup_database():
