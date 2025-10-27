@@ -16,25 +16,25 @@ import datetime
 from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from config import MONGO_DB
  
-# Assuming MONGO_DB is loaded from a config file/env
+import os # NEW LINE: Import the os module
+
+# ... other imports (e.g., from motor.motor_asyncio import AsyncIOMotorClient)
+
 MONGO_DB = os.environ.get("MONGO_DB") 
 
-if MONGO_DB: # <--- ADD THIS CHECK
-    mongo = MongoCli(MONGO_DB) # Only initialize if the URI is set
+if MONGO_DB:
+    mongo = MongoCli(MONGO_DB) 
 else:
-    # Create a dummy/empty class to prevent crashes in other functions
     class DummyMongo:
         def __init__(self):
             print("WARNING: Database functions disabled.")
 
-        # Add methods that the rest of the file uses, returning None or empty data
         def check_and_remove_expired_users(self):
             return
-        
-        # You'll need to define all methods used later in this file
-        # (e.g., plans.check_and_remove_expired_users, if that's what's used)
 
-    mongo = DummyMongo()
+    mongo = DummyMongo() 
+
+# ... rest of the file
 db = mongo.premium
 db = db.premium_db
  
